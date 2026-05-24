@@ -1,18 +1,20 @@
-# bad_code.py
+# fixed_code.py
 
-PASSWORD = "admin123"  # Security issue: hardcoded password
+import os
+import ast
 
-def calculate():
-    x = 10
-    y = 0
-    result = x / y  # Bug: division by zero
-    unused_value = 100  # Code smell: unused variable
+PASSWORD = os.getenv("APP_PASSWORD")
 
-    if True:  # Code smell: condition always true
-        print("This always runs")
+def calculate(x, y):
+    if y == 0:
+        return "Cannot divide by zero"
+    return x / y
 
-def risky_function(user_input):
-    return eval(user_input)  # Security issue: unsafe eval
+def safe_function(user_input):
+    try:
+        return ast.literal_eval(user_input)
+    except (ValueError, SyntaxError):
+        return "Invalid input"
 
-def empty_method():
-    pass
+def show_message():
+    print("Code quality improved")
